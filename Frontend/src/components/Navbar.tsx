@@ -1,12 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import LoginModal from "./LoginModal";
 import SignupModal from "./SignupModal";
+import OtpModal from "./OtpModal";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
+  const [showOtpModal, setShowOtpModal] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState("");
+
+  useEffect(() => {
+    const user = localStorage.getItem("loggedInUser");
+    const status = localStorage.getItem("isLoggedIn");
+    const readyToLogin = localStorage.getItem("readyToLogin");
+
+    if (status === "true" && user) {
+      setLoggedInUser(user);
+    }
+
+    if (readyToLogin === "true") {
+      setShowLoginModal(true);
+      localStorage.removeItem("readyToLogin");
+    }
+  }, []);
+
+  const logout = () => {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("loggedInUser");
+    window.location.reload();
+  };
 
   const handleSwitchToSignup = () => {
     setShowLoginModal(false);
@@ -16,6 +40,11 @@ export default function Navbar() {
   const handleSwitchToLogin = () => {
     setShowSignupModal(false);
     setTimeout(() => setShowLoginModal(true), 100);
+  };
+
+  const handleSignupComplete = () => {
+    setShowSignupModal(false);
+    setTimeout(() => setShowOtpModal(true), 100);
   };
 
   return (
@@ -30,12 +59,23 @@ export default function Navbar() {
             <div className="hidden md:flex gap-6 items-center">
               <Link to="/" className="text-gray-700 hover:text-[#ED1215]">Home</Link>
               <Link to="/about" className="text-gray-700 hover:text-[#ED1215]">About</Link>
-              <button onClick={() => setShowLoginModal(true)} className="text-gray-700 hover:text-[#ED1215]">
-                Login
-              </button>
-              <button onClick={() => setShowSignupModal(true)} className="text-gray-700 hover:text-[#ED1215]">
-                Signup
-              </button>
+
+              {loggedInUser ? (
+                <>
+                  <span className="text-[#0B3448] font-medium">Hi, {loggedInUser}</span>
+                  <button
+                    onClick={logout}
+                    className="text-gray-700 hover:text-red-600"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button onClick={() => setShowLoginModal(true)} className="text-gray-700 hover:text-[#ED1215]">Login</button>
+                  <button onClick={() => setShowSignupModal(true)} className="text-gray-700 hover:text-[#ED1215]">Signup</button>
+                </>
+              )}
             </div>
 
             <button
@@ -43,12 +83,8 @@ export default function Navbar() {
               onClick={() => setMenuOpen(!menuOpen)}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d={menuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                  d={menuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
               </svg>
             </button>
           </div>
@@ -57,12 +93,18 @@ export default function Navbar() {
             <div className="md:hidden mt-2 space-y-2 pb-4">
               <Link to="/" className="block text-gray-700 hover:text-[#ED1215]">Home</Link>
               <Link to="/about" className="block text-gray-700 hover:text-[#ED1215]">About</Link>
-              <button onClick={() => setShowLoginModal(true)} className="block text-gray-700 hover:text-[#ED1215]">
-                Login
-              </button>
-              <button onClick={() => setShowSignupModal(true)} className="block text-gray-700 hover:text-[#ED1215]">
-                Signup
-              </button>
+
+              {loggedInUser ? (
+                <>
+                  <span className="block text-[#0B3448]">Hi, {loggedInUser}</span>
+                  <button onClick={logout} className="block text-gray-700 hover:text-red-600">Logout</button>
+                </>
+              ) : (
+                <>
+                  <button onClick={() => setShowLoginModal(true)} className="block text-gray-700 hover:text-[#ED1215]">Login</button>
+                  <button onClick={() => setShowSignupModal(true)} className="block text-gray-700 hover:text-[#ED1215]">Signup</button>
+                </>
+              )}
             </div>
           )}
         </div>
@@ -79,8 +121,11 @@ export default function Navbar() {
         <SignupModal
           onClose={() => setShowSignupModal(false)}
           switchToLogin={handleSwitchToLogin}
+          openOtpModal={handleSignupComplete}
         />
       )}
+
+      {showOtpModal && <OtpModal onClose={() => setShowOtpModal(false)} />}
     </>
   );
 }
