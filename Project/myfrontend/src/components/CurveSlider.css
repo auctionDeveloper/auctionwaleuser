@@ -1,0 +1,19 @@
+.slider-container {
+    width: 500px;
+    height: 300px;
+    position: relative;
+    margin: 50px auto;
+    overflow: hidden;
+  }
+  
+  .card {
+    width: 150px;
+    height: 100px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
