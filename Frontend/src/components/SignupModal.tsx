@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid"; // ✅ Import UUID
 
 export default function SignupModal({
   onClose,
@@ -25,6 +26,10 @@ export default function SignupModal({
   const validatePhone = (phone: string) =>
     /^[0-9]{10}$/.test(phone);
 
+  const validatePassword = (password: string) =>
+    /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/.test(password);
+  // At least 8 characters, 1 number, 1 special character
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setError("");
@@ -37,9 +42,10 @@ export default function SignupModal({
 
     if (!validateEmail(email)) return setError("Invalid email format.");
     if (!validatePhone(phone)) return setError("Phone must be 10 digits.");
+    if (!validatePassword(password))
+      return setError("Password must be at least 8 characters, include 1 number and 1 special character.");
     if (password !== confirmPassword) return setError("Passwords do not match.");
 
-    // ✅ Check for existing user
     const existing = localStorage.getItem("signupProfile");
     if (existing) {
       const parsed = JSON.parse(existing);
@@ -48,8 +54,17 @@ export default function SignupModal({
       }
     }
 
-    // Save form data temporarily in localStorage (for OTP step)
-    localStorage.setItem("tempSignup", JSON.stringify({ name, email, phone }));
+    // ✅ Generate unique ID
+    const userId = uuidv4();
+
+    const tempProfile = {
+      id: userId,
+      name,
+      email,
+      phone,
+    };
+
+    localStorage.setItem("tempSignup", JSON.stringify(tempProfile));
     localStorage.setItem("signupPassword", password);
 
     onClose();       // Close Signup Modal
@@ -103,7 +118,7 @@ export default function SignupModal({
             name="password"
             value={formData.password}
             onChange={handleChange}
-            placeholder="Password"
+            placeholder="Password (min 8, 1 number, 1 special char)"
             className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-[#ED1215]"
             required
           />

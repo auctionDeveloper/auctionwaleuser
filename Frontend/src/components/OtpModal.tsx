@@ -14,7 +14,10 @@ export default function OtpModal({ onClose }: { onClose: () => void }) {
     if (tempData) {
       localStorage.setItem("signupProfile", tempData);
       localStorage.removeItem("tempSignup");
-      localStorage.setItem("readyToLogin", "true"); // flag to open login popup
+
+      // ✅ Ready for login and backend sync
+      localStorage.setItem("readyToLogin", "true");
+      localStorage.setItem("readyForBackendSync", "true");
     }
 
     onClose(); // Close OTP Modal
