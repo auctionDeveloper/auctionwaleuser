@@ -1,38 +1,51 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Menu, X } from 'lucide-react';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import logo from '/src/assets/logo.svg';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 import OtpModal from './OtpModal';
+import { useNavigate } from 'react-router-dom';
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [showOtpModal, setShowOtpModal] = useState(false);
-  const [loggedInUser, setLoggedInUser] = useState("");
+  const [loggedInUser, setLoggedInUser] = useState('');
+  const [showMenu, setShowMenu] = useState(false);
+  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
+  const menuRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const user = localStorage.getItem("loggedInUser");
-    const status = localStorage.getItem("isLoggedIn");
-    const readyToLogin = localStorage.getItem("readyToLogin");
+    const user = localStorage.getItem('loggedInUser');
+    const status = localStorage.getItem('isLoggedIn');
+    const readyToLogin = localStorage.getItem('readyToLogin');
 
-    if (status === "true" && user) {
+    if (status === 'true' && user) {
       setLoggedInUser(user);
     }
 
-    if (readyToLogin === "true") {
+    if (readyToLogin === 'true') {
       setShowLoginModal(true);
-      localStorage.removeItem("readyToLogin");
+      localStorage.removeItem('readyToLogin');
     }
+
+    const handleClickOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setShowMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
 
   const logout = () => {
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("loggedInUser");
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('loggedInUser');
     window.location.reload();
   };
 
@@ -49,6 +62,20 @@ export default function NavBar() {
   const handleSignupComplete = () => {
     setShowSignupModal(false);
     setTimeout(() => setShowOtpModal(true), 100);
+  };
+
+  const handleViewProfile = () => {
+    navigate('/profile');
+    setShowMenu(false);
+  };
+
+  const handleProfileClick = (e) => {
+    const rect = e.target.getBoundingClientRect();
+    setMenuPosition({
+      top: rect.bottom + window.scrollY,
+      left: rect.left + window.scrollX,
+    });
+    setShowMenu(!showMenu);
   };
 
   return (
@@ -68,18 +95,18 @@ export default function NavBar() {
             </div>
           </div>
 
-          {/* Desktop Login / Logout + Icon */}
+          {/* Desktop */}
           <div className="hidden md:flex items-center gap-4">
             <FavoriteBorderOutlinedIcon className="text-gray-700 cursor-pointer text-2xl" />
             {loggedInUser ? (
               <>
-                <span className="text-[#0B3448] font-medium">Hi, {loggedInUser}</span>
-                <button
-                  className="px-4 py-2 text-sm text-gray-700 hover:text-red-600"
-                  onClick={logout}
-                >
-                  Logout
-                </button>
+                <span className="text-[#0B3448] text-sm font-medium">{loggedInUser}</span>
+                <img
+                  src="/src/assets/profile-icon.jpg"
+                  alt="Profile"
+                  className="w-10 h-10 rounded-full object-cover cursor-pointer"
+                  onClick={handleProfileClick}
+                />
               </>
             ) : (
               <button
@@ -111,18 +138,18 @@ export default function NavBar() {
               <li className="cursor-pointer hover:underline">Feature</li>
             </ul>
 
-            {/* Mobile Login/Logout + Icon */}
+            {/* Mobile */}
             <div className="flex items-center gap-3 md:hidden">
               <FavoriteBorderOutlinedIcon className="text-white cursor-pointer text-xl" />
               {loggedInUser ? (
                 <>
-                  <span className="text-sm">Hi, {loggedInUser}</span>
-                  <button
-                    onClick={logout}
-                    className="text-sm px-3 py-1 border border-white rounded-full hover:bg-white hover:text-[#930000] transition"
-                  >
-                    Logout
-                  </button>
+                  <span className="text-white text-sm"> Hi, {loggedInUser}</span>
+                  <img
+                    src="/src/assets/profile-icon.jpg"
+                    alt="Profile"
+                    className="w-8 h-8 rounded-full object-cover cursor-pointer"
+                    onClick={handleProfileClick}
+                  />
                 </>
               ) : (
                 <button
@@ -162,6 +189,31 @@ export default function NavBar() {
           )}
         </div>
       </div>
+
+      {/* Profile Dropdown (fixed, works on scroll) */}
+      {showMenu && (
+        <div
+          ref={menuRef}
+          className="fixed w-48 bg-[#1f1f1f] text-white shadow-lg rounded-md z-[9999] py-2"
+          style={{
+            top: `${menuPosition.top}px`,
+            left: `${menuPosition.left - 150}px`, // shift ~100px left from icon
+          }}
+        >
+          <button
+            onClick={handleViewProfile}
+            className="w-full text-left px-4 py-2 hover:bg-[#333] text-sm"
+          >
+            View Profile
+          </button>
+          <button
+            onClick={logout}
+            className="w-full text-left px-4 py-2 hover:bg-[#333] text-sm text-red-400"
+          >
+            Logout
+          </button>
+        </div>
+      )}
 
       {/* Modals */}
       {showLoginModal && (
