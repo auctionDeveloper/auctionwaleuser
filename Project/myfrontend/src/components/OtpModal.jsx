@@ -26,14 +26,17 @@ export default function OtpModal({ onClose }) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center">
       <div className="bg-white w-full max-w-sm rounded-xl shadow-lg p-6 relative">
+        {/* ✅ Close button with browser-default fixes */}
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-gray-500 hover:text-red-600 text-3xl leading-none p-1"
+          className="absolute top-3 right-3 text-gray-500 hover:text-red-600 text-2xl p-1 bg-transparent border-none appearance-none leading-none"
         >
-          &times;
+          ×
         </button>
 
-        <h2 className="text-2xl font-bold text-[#0B3448] text-center mb-1">OTP Verification</h2>
+        <h2 className="text-2xl font-bold text-[#0B3448] text-center mb-1 select-none">
+          OTP Verification
+        </h2>
         <p className="text-sm text-center text-gray-600 mb-6">
           Enter the 6-digit OTP sent to your email or phone
         </p>

@@ -37,13 +37,17 @@ export default function LoginModal({ onClose, switchToSignup }) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center">
       <div className="bg-white w-full max-w-sm rounded-xl shadow-lg p-6 relative">
+        {/* ✅ Close Button FIX */}
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-gray-500 hover:text-red-600 text-3xl leading-none p-1"
+          className="absolute top-3 right-3 text-gray-500 hover:text-red-600 text-2xl p-1 bg-transparent border-none appearance-none leading-none"
         >
-          &times;
+          ×
         </button>
-        <h2 className="text-2xl font-bold text-[#0B3448] text-center mb-1">Welcome to AuctionWale</h2>
+
+        <h2 className="text-2xl font-bold text-[#0B3448] text-center mb-1 select-none">
+          Welcome to AuctionWale
+        </h2>
         <p className="text-sm text-center text-gray-600 mb-6">Login to your account</p>
 
         {error && <p className="text-center text-red-600 text-sm mb-4">{error}</p>}

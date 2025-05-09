@@ -9,7 +9,6 @@ export default function SignupModal({ onClose, switchToLogin, openOtpModal }) {
     password: "",
     confirmPassword: "",
   });
-
   const [error, setError] = useState("");
 
   const validateEmail = (email) =>
@@ -64,13 +63,17 @@ export default function SignupModal({ onClose, switchToLogin, openOtpModal }) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center">
       <div className="bg-white w-full max-w-sm rounded-xl shadow-lg p-6 relative">
+        {/* ✅ Close Button with browser-style fix */}
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-gray-500 hover:text-red-600 text-3xl leading-none p-1"
+          className="absolute top-3 right-3 text-gray-500 hover:text-red-600 text-2xl p-1 bg-transparent border-none appearance-none leading-none"
         >
-          &times;
+          ×
         </button>
-        <h2 className="text-2xl font-bold text-[#0B3448] text-center mb-1">Create Account</h2>
+
+        <h2 className="text-2xl font-bold text-[#0B3448] text-center mb-1 select-none">
+          Create Account
+        </h2>
         <p className="text-sm text-center text-gray-600 mb-6">Sign up to AuctionWale</p>
 
         {error && <p className="text-sm text-red-600 text-center mb-2">{error}</p>}
