@@ -101,8 +101,8 @@ export default function Navbar() {
                 </>
               ) : (
                 <>
+                  {/* <button onClick={() => setShowSignupModal(true)} className="block text-gray-700 hover:text-[#ED1215]">Signup</button> */}
                   <button onClick={() => setShowLoginModal(true)} className="block text-gray-700 hover:text-[#ED1215]">Login</button>
-                  <button onClick={() => setShowSignupModal(true)} className="block text-gray-700 hover:text-[#ED1215]">Signup</button>
                 </>
               )}
             </div>
