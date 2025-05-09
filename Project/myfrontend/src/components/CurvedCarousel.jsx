@@ -16,7 +16,7 @@ export default function CurvedCarousel() {
 
   const toggleLike = (index) => {
     const newLikes = [...liked];
-    newLikes[index] = !newLikes[index];
+    newLikes[index] = !liked[index];
     setLiked(newLikes);
   };
 
@@ -35,10 +35,11 @@ export default function CurvedCarousel() {
       <div className="relative w-full z-10 py-[50px] overflow-visible">
         {/* Top Oval */}
         <div
-          className="absolute top-0 left-1/2 transform -translate-x-1/2 z-30 pointer-events-none flex items-start justify-center pt-5 text-black text-3xl font-bold select-none"
+          className="absolute left-1/2 transform -translate-x-1/2 z-30 pointer-events-none flex items-start justify-center pt-5 text-black text-3xl font-bold select-none"
           style={{
-            width: "150vw",
-            height: "100px",
+            top: "-100px", // moved upward
+            width: "120vw",
+            height: "200px",
             backgroundColor: "#ffffff",
             borderBottomLeftRadius: "100%",
             borderBottomRightRadius: "100%",
@@ -50,9 +51,10 @@ export default function CurvedCarousel() {
 
         {/* Bottom Oval */}
         <div
-          className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-[150vw] z-30 pointer-events-none"
+          className="absolute left-1/2 transform -translate-x-1/2 w-[150vw] z-30 pointer-events-none"
           style={{
-            height: "100px",
+            bottom: "-100px", // pulled upward
+            height: "280px",
             backgroundColor: "#ffffff",
             borderTopLeftRadius: "100%",
             borderTopRightRadius: "100%",
@@ -82,7 +84,7 @@ export default function CurvedCarousel() {
           {images.map((src, index) => (
             <div
               key={index}
-              className="group shrink-0 w-[30vw] sm:w-[20vw] h-[55vh] sm:h-[60vh] rounded-3xl overflow-hidden relative transition-transform duration-300 z-20"
+              className="group shrink-0 w-[30vw] sm:w-[20vw] h-[60vh] sm:h-[70vh] rounded-3xl overflow-hidden relative transition-transform duration-300 z-20"
             >
               <img
                 src={src}
@@ -116,7 +118,7 @@ export default function CurvedCarousel() {
                       viewBox="0 0 24 24"
                       stroke="gray"
                       strokeWidth={1.8}
-                      className="w-4 sm:w-6 h-3 sm:h-6"
+                      className="w-3 sm:w-6 h-3 sm:h-6"
                     >
                       <path
                         strokeLinecap="round"

@@ -5,7 +5,7 @@ import logo from '/src/assets/logo.svg';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 import OtpModal from './OtpModal';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -172,11 +172,11 @@ export default function NavBar() {
               <button onClick={toggleSidebar} className="self-end">
                 <X size={28} />
               </button>
-              <a href="#" onClick={toggleSidebar}>View Auction</a>
-              <a href="#" onClick={toggleSidebar}>Budget Auction</a>
-              <a href="#" onClick={toggleSidebar}>Area Auction</a>
-              <a href="#" onClick={toggleSidebar}>Expert Advice</a>
-              <a href="#" onClick={toggleSidebar}>Feature</a>
+              <Link href="/view_auction" onClick={toggleSidebar}>View Auction</Link>
+              <Link href="/budget_auction" onClick={toggleSidebar}>Budget Auction</Link>
+              <Link href="/area_auction" onClick={toggleSidebar}>Area Auction</Link>
+              <Link href="/expert_advice" onClick={toggleSidebar}>Expert Advice</Link>
+              <Link href="/features" onClick={toggleSidebar}>Feature</Link>
             </div>
           </div>
 
