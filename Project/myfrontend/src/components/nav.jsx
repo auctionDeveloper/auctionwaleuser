@@ -115,7 +115,7 @@ export default function NavBar() {
         </div>
 
         {/* Fixed: Added relative here */}
-        <div className="bg-[#930000] text-white z-40">
+        <div className="bg-[#930000] text-white relative z-40">
           <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
             <div className="md:hidden">
               <button onClick={toggleSidebar}>
