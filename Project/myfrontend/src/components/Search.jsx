@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function header() {
+export default function Search() {
   return (
     <div>
-      hh
+      
     </div>
   )
 }

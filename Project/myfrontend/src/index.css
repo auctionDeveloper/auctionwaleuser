@@ -39,4 +39,7 @@ select {
 ::-webkit-scrollbar-button {
   display: none; /* This removes the up/down (or left/right) arrows */
 }
+*::-webkit-scrollbar {
+  display: none;
+}
 
