@@ -22,4 +22,21 @@ select {
   -webkit-appearance: none;
   -moz-appearance: none;
 }
+/* Hide scrollbar arrows and customize scrollbar (for Webkit browsers like Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #a0aec0; /* Tailwind gray-400 */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-button {
+  display: none; /* This removes the up/down (or left/right) arrows */
+}
 

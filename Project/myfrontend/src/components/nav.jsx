@@ -131,12 +131,32 @@ export default function NavBar() {
 
             {/* Desktop Menu */}
             <ul className="hidden md:flex gap-8 text-sm font-medium w-full justify-center">
-              <li className="cursor-pointer hover:underline">View Auction</li>
-              <li className="cursor-pointer hover:underline">Budget Auction</li>
-              <li className="cursor-pointer hover:underline">Area Auction</li>
-              <li className="cursor-pointer hover:underline">Expert Advice</li>
-              <li className="cursor-pointer hover:underline">Feature</li>
-            </ul>
+                <li>
+    <Link to="/about" className="hover:underline">About</Link>
+  </li>
+  <li>
+    <Link to="/view_auction" className="hover:underline">View Auction</Link>
+  </li>
+  <li>
+    <Link to="/budget_auction" className="hover:underline">Budget Auction</Link>
+  </li>
+  <li>
+    <Link to="/area_auction" className="hover:underline">Area Auction</Link>
+  </li>
+  <li>
+    <Link to="/expert_advice" className="hover:underline">Expert Advice</Link>
+  </li>
+  <li>
+    <Link to="/features" className="hover:underline">Feature</Link>
+  </li>
+    <li>
+    <Link to="/contact" className="hover:underline">Contact</Link>
+  </li>
+    <li>
+    <Link to="/FAQ" className="hover:underline">FAQs</Link>
+  </li>
+</ul>
+
 
             {/* Mobile */}
             <div className="flex items-center gap-3 md:hidden">
@@ -172,11 +192,14 @@ export default function NavBar() {
               <button onClick={toggleSidebar} className="self-end">
                 <X size={28} />
               </button>
-              <Link href="/view_auction" onClick={toggleSidebar}>View Auction</Link>
-              <Link href="/budget_auction" onClick={toggleSidebar}>Budget Auction</Link>
-              <Link href="/area_auction" onClick={toggleSidebar}>Area Auction</Link>
-              <Link href="/expert_advice" onClick={toggleSidebar}>Expert Advice</Link>
-              <Link href="/features" onClick={toggleSidebar}>Feature</Link>
+              <Link to="/about" onClick={toggleSidebar}>About</Link>
+              <Link to="/view_auction" onClick={toggleSidebar}>View Auction</Link>
+              <Link to="/budget_auction" onClick={toggleSidebar}>Budget Auction</Link>
+              <Link to="/area_auction" onClick={toggleSidebar}>Area Auction</Link>
+              <Link to="/expert_advice" onClick={toggleSidebar}>Expert Advice</Link>
+              <Link to="/features" onClick={toggleSidebar}>Feature</Link>
+              <Link to="/contact" onClick={toggleSidebar}>Contact</Link>
+              <Link to="/FAQ" onClick={toggleSidebar}>FAQs</Link>
             </div>
           </div>
 

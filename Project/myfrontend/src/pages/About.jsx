@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function CurvedCarousel() {
+export default function About() {
   return (
     <div>
-      
+      About Us
     </div>
   )
 }
