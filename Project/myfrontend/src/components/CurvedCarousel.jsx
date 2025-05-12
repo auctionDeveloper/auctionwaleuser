@@ -1,4 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { Heart, ArrowLeftCircle, ArrowRightCircle, ArrowRight, ChevronDown } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const images = [
   "https://picsum.photos/id/1015/1000/700",
@@ -12,7 +14,10 @@ const images = [
 
 export default function CurvedCarousel() {
   const scrollRef = useRef(null);
+  const dropdownRef = useRef(null);
   const [liked, setLiked] = useState(Array(images.length).fill(false));
+  const [showDropdown, setShowDropdown] = useState(false);
+  const navigate = useNavigate();
 
   const toggleLike = (index) => {
     const newLikes = [...liked];
@@ -23,56 +28,77 @@ export default function CurvedCarousel() {
   const scroll = (dir) => {
     const container = scrollRef.current;
     const cardWidth = container.firstChild.offsetWidth + 32;
-    if (dir === "left") {
-      container.scrollBy({ left: -cardWidth, behavior: "smooth" });
-    } else {
-      container.scrollBy({ left: cardWidth, behavior: "smooth" });
-    }
+    if (dir === "left") container.scrollLeft -= cardWidth;
+    else container.scrollLeft += cardWidth;
   };
 
+  const handleOptionClick = (price) => {
+    navigate(`/view_auction?budget=${price}`);
+    setShowDropdown(false);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
-    <div className="w-full bg-white relative overflow-visible">
+    <div className="w-full bg-white relative overflow-hidden">
       <div className="relative w-full z-10 py-[50px] overflow-visible">
         {/* Top Oval */}
         <div
-          className="absolute left-1/2 transform -translate-x-1/2 z-30 pointer-events-none flex items-start justify-center pt-5 text-black text-3xl font-bold select-none"
+          className="absolute left-1/2 transform -translate-x-1/2 z-30 "
           style={{
-            top: "-100px", // moved upward
-            width: "120vw",
-            height: "200px",
+            top: "-100px",
+            width: "105vw",
+            height: "270px",
             backgroundColor: "#ffffff",
             borderBottomLeftRadius: "100%",
             borderBottomRightRadius: "100%",
             userSelect: "none",
           }}
         >
-          Budgetwise Auctions
+          <div className="absolute top-[140px] left-1/2 transform -translate-x-1/2 z-[9999] w-full flex flex-col items-center justify-center">
+            <div className="relative flex items-center gap-2 cursor-pointer z-[10000]" onClick={() => setShowDropdown(!showDropdown)} ref={dropdownRef}>
+              <h2 className="text-3xl font-bold text-gray-800 border-b-4 border-red-600 pb-1 mb-2">
+                Budgetwise Auctions
+              </h2>
+              <ChevronDown className="text-gray-700 hover:text-red-600 mb-2" />
+            </div>
+            {showDropdown && (
+              <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-white shadow-lg rounded-md z-[10000] w-48">
+                <ul className="text-sm text-gray-700">
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => handleOptionClick("under-25-lakhs")}>Under 25 Lakhs</li>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => handleOptionClick("25-50-lakhs")}>25 - 50 Lakhs</li>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => handleOptionClick("above-50-lakhs")}>Above 50 Lakhs</li>
+                </ul>
+              </div>
+            )}
+            <p className="text-gray-500 text-sm sm:text-base font-medium mt-1">
+              Save Your pocket by looking <span className="font-semibold text-gray-700">budgetwise</span> projects.
+            </p>
+          </div>
         </div>
 
         {/* Bottom Oval */}
         <div
-          className="absolute left-1/2 transform -translate-x-1/2 w-[150vw] z-30 pointer-events-none"
+          className="absolute left-1/2 transform -translate-x-1/2 w-[150vw] z-30 pointer-events-none pb-1"
           style={{
-            bottom: "-100px", // pulled upward
-            height: "280px",
+            bottom: "-390px",
+            height: "590px",
             backgroundColor: "#ffffff",
             borderTopLeftRadius: "100%",
-            borderTopRightRadius: "100%",
+            borderTopRightRadius: "100%"
           }}
         >
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-40 flex gap-6 pointer-events-auto">
-            <button
-              onClick={() => scroll("left")}
-              className="bg-gray-200 text-black text-3xl px-6 py-3 rounded-full shadow hover:bg-gray-300"
-            >
-              &#8249;
-            </button>
-            <button
-              onClick={() => scroll("right")}
-              className="bg-gray-200 text-black text-3xl px-6 py-3 rounded-full shadow hover:bg-gray-300"
-            >
-              &#8250;
-            </button>
+          <div className="absolute bottom-[490px] left-1/2 -translate-x-1/2 z-40 flex gap-6 pointer-events-auto items-center justify-center">
+            <button onClick={() => scroll("left")}> <ArrowLeftCircle className="w-10 h-10 text-black hover:text-red-600 transition" /> </button>
+            <button onClick={() => scroll("right")}> <ArrowRightCircle className="w-10 h-10 text-black hover:text-red-600 transition" /> </button>
           </div>
         </div>
 
@@ -84,7 +110,7 @@ export default function CurvedCarousel() {
           {images.map((src, index) => (
             <div
               key={index}
-              className="group shrink-0 w-[30vw] sm:w-[20vw] h-[60vh] sm:h-[70vh] rounded-3xl overflow-hidden relative transition-transform duration-300 z-20"
+              className="group shrink-0 w-[30vw] sm:w-[22vw] h-[60vh] sm:h-[90vh] rounded-3xl overflow-hidden relative transition-transform duration-300 z-20"
             >
               <img
                 src={src}
@@ -92,53 +118,29 @@ export default function CurvedCarousel() {
                 className="w-full h-full object-cover rounded-3xl"
               />
 
-              {/* Heart Icon - Top right */}
+              {/* Heart Icon */}
               <div
                 onClick={() => toggleLike(index)}
-                className="absolute top-14 right-4 z-40 cursor-pointer hover:scale-110 transition-transform"
+                className="absolute top-16 right-4 z-40 cursor-pointer hover:scale-110 transition-transform"
               >
                 <div className="bg-white rounded-full p-2 shadow-md flex items-center justify-center w-11 h-11">
                   {liked[index] ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="red"
-                      viewBox="0 0 24 24"
-                      className="w-6 h-6"
-                    >
-                      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 
-                        2 8.5 2 6 4 4 6.5 4c1.74 0 3.41 1.01 
-                        4.13 2.44h1.74C14.09 5.01 15.76 4 
-                        17.5 4 20 4 22 6 22 8.5c0 3.78-3.4 
-                        6.86-8.55 11.54L12 21.35z" />
-                    </svg>
+                    <Heart className="w-6 h-6 text-red-500 fill-red-500" />
                   ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="gray"
-                      strokeWidth={1.8}
-                      className="w-3 sm:w-6 h-3 sm:h-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M3.172 5.172a4.5 4.5 0 016.364 0L12 7.636l2.464-2.464a4.5 4.5 0 116.364 6.364L12 21.364 3.172 11.536a4.5 4.5 0 010-6.364z"
-                      />
-                    </svg>
+                    <Heart className="w-6 h-6 text-gray-400" />
                   )}
                 </div>
               </div>
 
-              {/* Overlay with Blur and Content */}
+              {/* Hover Overlay */}
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end text-white rounded-3xl">
-                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end items-center text-center sm:text-left px-5 sm:px-14 pb-12 sm:pb-14 py-14 gap-3 sm:gap-0">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end items-center text-center sm:text-left px-5 sm:px-14 pb-6 sm:pb-8 py-10 gap-3 sm:gap-0">
                   <div>
                     <p className="text-base sm:text-lg md:text-xl font-semibold">Image Title</p>
                     <p className="text-xs sm:text-sm opacity-80">2-word Text</p>
                   </div>
                   <button className="text-white text-2xl font-bold p-2 hover:scale-110 transition">
-                    &#8594;
+                    <ArrowRight className="w-6 h-6" />
                   </button>
                 </div>
               </div>

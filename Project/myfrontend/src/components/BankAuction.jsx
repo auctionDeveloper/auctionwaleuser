@@ -81,7 +81,7 @@ export default function BankAuctions() {
       {/* Floating More Banks Button (OUTSIDE) */}
       <div className="absolute bottom-11 left-1/2 transform -translate-x-1/2 z-20">
         <button className=" bg-white text-[#0B3448] font-semibold text-sm px-6 py-2 rounded-full flex items-center gap-2 transition-all duration-300 hover:bg-[#930000] hover:text-white border border-[#0B3448] hover:bg-[#930000] hover:text-white hover:border-transparent shadow-2xl ">
-          More Banks <span className="text-2xl font-semibold leading-none">+</span>
+          More Banks <span className="text-2xl font-semibold leading-none pb-1">+</span>
         </button>
       </div>
     </div>

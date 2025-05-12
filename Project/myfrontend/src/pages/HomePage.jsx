@@ -4,12 +4,12 @@ import Testimonials from '../components/Testimonials'
 import BankAuction from '../components/BankAuction'
 import MissionVision from '../components/MissionVision'
 import WhyUseAuctionwale from '../components/WhyUseAuctionwale'
-import HomeSearch from '../components/HomeSearch'
+import SearchBar from '../components/SearchBar'
 
 export default function HomePage() {
   return (
     <div>
-       <HomeSearch/>
+         <SearchBar/>
        <CurvedCarousel/>
        <WhyUseAuctionwale/>
 

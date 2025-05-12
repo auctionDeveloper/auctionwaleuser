@@ -8,38 +8,12 @@
     box-sizing: border-box;
     overflow-x: hidden;
   }
-  .no-scrollbar {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* IE and Edge */
-  }
-  
-  .no-scrollbar::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
-  }
-  input[type="number"],
-select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-/* Hide scrollbar arrows and customize scrollbar (for Webkit browsers like Chrome, Edge, Safari) */
-::-webkit-scrollbar {
-  width: 8px;
+ 
+.no-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
-
-::-webkit-scrollbar-thumb {
-  background-color: #a0aec0; /* Tailwind gray-400 */
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-button {
-  display: none; /* This removes the up/down (or left/right) arrows */
-}
-*::-webkit-scrollbar {
-  display: none;
-}
-

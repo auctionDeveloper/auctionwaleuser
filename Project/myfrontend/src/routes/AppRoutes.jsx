@@ -9,6 +9,7 @@ import Features from "../pages/Features";
 import About from "../pages/About";
 import Contact from "../pages/Contact";
 import FAQs from "../pages/FAQs";
+import SearchPage from "../pages/SearchPage";
 
 
 export default function AppRoutes() {
@@ -24,6 +25,7 @@ export default function AppRoutes() {
       <Route path="/features" element={<Features/>} />
       <Route path="/contact" element={<Contact/>} />
       <Route path="/FAQ" element={<FAQs/>} />
+      <Route path="/search" element={<SearchPage/>}/>
     </Routes>
   );
 }

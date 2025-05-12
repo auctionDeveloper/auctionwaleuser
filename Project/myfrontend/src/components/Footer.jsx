@@ -10,12 +10,10 @@ export default function Footer() {
         <div className="w-full md:w-[40%]">
           <div className="flex items-center gap-4 mb-3">
             <img src={logo} alt="Logo" className="h-16 w-16 object-contain" />
-            <div className="flex flex-col w-fit leading-tight font-poppins overflow-hidden">
-              <h2 className="text-3xl font-extrabold text-[#1f2937]">Auctionwale</h2>
-              <p className="text-base font-semibold text-[#930000] mt-[-2px]">
-                Expert in Bank Auction
-              </p>
-            </div>
+ <div className="flex flex-col font-poppins  whitespace-nowrap">
+  <h1 className="text-3xl font-extrabold text-[#1f2937] leading-tight pb-1">Auctionwale</h1>
+  <p className="text-base font-semibold text-[#930000] mt-[-3px]">Expert for Bank Auctions</p>
+</div>
           </div>
           <p className="mb-3">
             AuctionWale aims to revolutionize property auctions in India through a transparent, tech-driven platform. Our vision is to simplify access to verified auction listings for all users.
