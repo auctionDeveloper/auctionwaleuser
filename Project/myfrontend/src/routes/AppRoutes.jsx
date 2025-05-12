@@ -10,6 +10,8 @@ import About from "../pages/About";
 import Contact from "../pages/Contact";
 import FAQs from "../pages/FAQs";
 import SearchPage from "../pages/SearchPage";
+import HeartWishlistButton from "../components/HeartWishlistButton";
+import HeartWishlist from "../pages/HeartWishlist";
 
 
 export default function AppRoutes() {
@@ -26,6 +28,8 @@ export default function AppRoutes() {
       <Route path="/contact" element={<Contact/>} />
       <Route path="/FAQ" element={<FAQs/>} />
       <Route path="/search" element={<SearchPage/>}/>
+      <Route path="/heartwishlist" element={<HeartWishlist />} />
+
     </Routes>
   );
 }

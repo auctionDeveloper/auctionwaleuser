@@ -61,8 +61,9 @@ export default function SignupModal({ onClose, switchToLogin, openOtpModal }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center">
-      <div className="bg-white w-full max-w-sm rounded-xl shadow-lg p-6 relative">
+  <div className="fixed inset-0 bg-black bg-opacity-40 z-[9999] flex items-center justify-center overflow-y-auto p-4">
+
+      <div className="bg-white w-full max-w-sm rounded-xl shadow-lg p-6 relative pb-5">
         {/* ✅ Close Button with browser-style fix */}
         <button
           onClick={onClose}

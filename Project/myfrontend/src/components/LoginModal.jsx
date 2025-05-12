@@ -83,9 +83,18 @@ export default function LoginModal({ onClose, switchToSignup }) {
           <button onClick={switchToSignup} className="hover:underline text-[#0B3448]">
             New user? Sign up
           </button>
-          <a href="#" className="hover:underline text-[#0B3448]">
-            Forgot password?
-          </a>
+          <button
+  onClick={() => {
+    onClose(); // close login modal
+    setTimeout(() => {
+      window.dispatchEvent(new Event("showForgotPassword"));
+    }, 200);
+  }}
+  className="hover:underline text-[#0B3448]"
+>
+  Forgot password?
+</button>
+
         </div>
       </div>
     </div>

@@ -16,7 +16,7 @@ export default function WhyUseAuctionwale() {
       {/* Decorative Heading with Dots */}
       <div className="flex items-center justify-center mb-10 relative">
         <div className="flex-grow h-px bg-[#0B3448] mr-2 relative text-extrabold">
-          <span className="absolute right-0 top-1/2 transform -translate-y-1/2 w-2 h-2 bg-[#0B3448] rounded-full text-extrabold" />
+          <span className="absolute right-0 top-1/2 transform -translate-y-1/2 w-2 h-2 bg-[#0B3448] rounded-full" />
         </div>
         <h2 className="text-[#0B3448] text-xl sm:text-2xl font-bold px-4">
           Why Use Auctionwale

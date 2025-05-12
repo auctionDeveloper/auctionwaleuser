@@ -12,9 +12,7 @@ const categories = [
 ];
 
 const cityLocalities = {
-  Mumbai: [
-    "Andheri", "Bandra", "Juhu", "Worli", "Chembur", "Malabar Hill", "Powai", "Versova", "Colaba",
-  ],
+  Mumbai: ["Andheri", "Bandra", "Juhu", "Worli", "Chembur", "Malabar Hill", "Powai", "Versova", "Colaba"],
   Pune: ["Kothrud", "Baner", "Viman Nagar", "Hadapsar", "Kharadi", "Wagholi"],
   Hyderabad: ["Banjara Hills", "Madhapur", "Gachibowli", "Secunderabad"],
   Chennai: ["T Nagar", "Anna Nagar", "Adyar", "Velachery"],
@@ -40,9 +38,7 @@ export default function SearchBar() {
     const localities = cityLocalities[selectedCity];
     const interval = setInterval(() => {
       setTypewriter(localities[localityIndex]);
-      setLocalityIndex((prev) =>
-        prev + 1 >= localities.length ? 0 : prev + 1
-      );
+      setLocalityIndex((prev) => (prev + 1 >= localities.length ? 0 : prev + 1));
     }, 1200);
 
     return () => clearInterval(interval);
@@ -61,31 +57,25 @@ export default function SearchBar() {
       auctionType,
       budget,
     }).toString();
-
     navigate(`/search?${query}`);
   };
 
   return (
-    <div className="w-full px-4 md:px-8 py-10 flex justify-center bg-white relative">
-      <div className="w-full max-w-6xl flex flex-col items-center relative">
+    <div className="w-auto px-4 md:px-8 py-10 flex justify-center bg-white relative">
+      <div className="w-full max-w-6xl flex flex-col items-center relative text-xs">
         {/* 🔵 Blue Tab */}
-        <div className="bg-[#123243] rounded-t-full py-6 px-8 w-[400px] sm:w-[750px] z-0">
-          <div className="flex justify-center flex-wrap gap-x-1 sm:gap-x-8 gap-y-1 sm:gap-y-3 text-white text-sm md:text-base pb-4">
+        <div className="bg-[#123243] rounded-t-full py-4 px-6 w-full sm:w-[750px] z-0 mx-2">
+          <div className="flex justify-center flex-wrap gap-x-1 sm:gap-x-6 gap-y-1 sm:gap-y-2 text-white text-xs pb-6">
             {categories.map((cat, index) => (
-              <div key={cat} className="flex items-center gap-1 sm:gap-3">
+              <div key={cat} className="flex items-center gap-1 sm:gap-2">
                 <button
                   onClick={() => setSelectedCategory(cat)}
-                  className={`${
-                    selectedCategory === cat ? "font-bold underline" : ""
-                  }`}
+                  className={`${selectedCategory === cat ? "font-semibold underline" : ""}`}
                 >
                   {cat.replace("|", "").trim()}
                 </button>
                 {index !== categories.length - 1 && (
-                  <span className="text-white text-lg leading-none pb-1">
-                    {" "}
-                    |
-                  </span>
+                  <span className="text-white leading-none pb-1">|</span>
                 )}
               </div>
             ))}
@@ -93,12 +83,12 @@ export default function SearchBar() {
         </div>
 
         {/* ⚪ Search Bar */}
-        <div className="w-full h-[40px] sm:h-[60px] mt-[-28px] bg-white border border-red-700 rounded-full flex overflow-hidden items-stretch z-10 relative shadow-sm">
-          {/* 📍 Location Dropdown */}
-          <div className="flex items-center gap-2 px-4 py-3 border-r border-gray-300 flex-grow md:flex-grow-0">
+        <div className="w-full h-[45px] sm:h-[55px] mt-[-24px] bg-white border border-red-700 rounded-full flex overflow-hidden items-stretch z-10 relative shadow-sm text-xs">
+          {/* 📍 Location */}
+          <div className="flex items-center gap-1 px-3 py-2 border-r border-gray-300 flex-grow md:flex-grow-0">
             <MapPin className="text-gray-500 w-4 h-4" />
             <select
-              className="bg-transparent outline-none text-sm w-full"
+              className="bg-transparent outline-none text-xs w-full"
               value={selectedCity}
               onChange={(e) => {
                 setSelectedCity(e.target.value);
@@ -116,12 +106,12 @@ export default function SearchBar() {
             </select>
           </div>
 
-          {/* 🏘 Typable Input */}
-          <div className="flex items-center px-4 py-3 border-r border-gray-300 flex-grow">
+          {/* 🏘 Search Input */}
+          <div className="flex items-center px-3 py-2 border-r border-gray-300 flex-grow">
             <input
               type="text"
               placeholder="Search for Auctions"
-              className={`bg-transparent outline-none w-full text-sm ${
+              className={`bg-transparent outline-none w-full text-xs ${
                 typedSearch ? "text-black" : "text-gray-500"
               }`}
               value={typedSearch || (!typingStarted && typewriter) || ""}
@@ -129,11 +119,11 @@ export default function SearchBar() {
             />
           </div>
 
-          {/* Auction Type */}
-          <div className="flex items-center gap-2 px-4 py-3 border-r border-gray-300 flex-grow md:flex-grow-0">
+          {/* 👤 Auction Type */}
+          <div className="flex items-center gap-1 px-3 py-2 border-r border-gray-300 flex-grow md:flex-grow-0">
             <User className="text-gray-500 w-4 h-4" />
             <select
-              className="bg-transparent outline-none text-sm w-full"
+              className="bg-transparent outline-none text-xs w-full"
               value={auctionType}
               onChange={(e) => setAuctionType(e.target.value)}
             >
@@ -143,11 +133,11 @@ export default function SearchBar() {
             </select>
           </div>
 
-          {/* Budget */}
-          <div className="flex items-center gap-2 px-4 py-3 border-r border-gray-300 flex-grow md:flex-grow-0">
+          {/* 💰 Budget */}
+          <div className="flex items-center gap-1 px-3 py-2 border-r border-gray-300 flex-grow md:flex-grow-0">
             <Coins className="text-gray-500 w-4 h-4" />
             <select
-              className="bg-transparent outline-none text-sm w-full"
+              className="bg-transparent outline-none text-xs w-full"
               value={budget}
               onChange={(e) => setBudget(e.target.value)}
             >
@@ -161,9 +151,9 @@ export default function SearchBar() {
           {/* 🔍 Search Button */}
           <button
             onClick={handleSearchClick}
-            className="bg-red-700 px-6 flex items-center justify-center rounded-r-full shrink-0"
+            className="bg-red-700 px-4 flex items-center justify-center rounded-r-full shrink-0"
           >
-            <Search className="text-white w-5 h-5" />
+            <Search className="text-white w-4 h-4" />
           </button>
         </div>
       </div>
